@@ -7,19 +7,23 @@ export default (title, description, dueDate, priority) => {
         description,
         dueDate,
         priority,
+        status: false,
 
         //Accessor functions
         getTitle: function() {
-            return title;
+            return this.title;
         },
         getDescription: function() {
-            return description;
+            return this.description;
         },
         getDueDate: function() {
-            return dueDate;
+            return this.dueDate;
         },
         getPriority: function() {
-            return priority;
+            return this.priority;
+        },
+        getStatus: function() {
+            return this.status;
         },
 
         //Mutator functions
@@ -35,6 +39,10 @@ export default (title, description, dueDate, priority) => {
         setPriority: function(newPriority) {
             priority = newPriority;
         },
+        alterStatus: function() {
+            let currentStatus = this.status;
+            this.status = !currentStatus;
+        }
     };
 
     return newTask;

@@ -1,0 +1,46 @@
+--- = done, - = working on
+
+
+Step 1: Be able to create tasks {}
+    Create factory function ---
+    Create accessor and mutator functions ---
+    Be able to set actual dates --- (just use new Date())
+
+Step 2: Create Project module for storing tasks (prob an array)
+    Create factory function for projects ---
+    Able to add tasks to projects ---
+    Able to remove tasks from projects (splice array holding tasks) ---
+    Able to mark task as finished ---
+    Sort functions
+        Clear Sorted array ---
+        By Date -
+        By Priority (Then by name)
+        By Name (alphabetical) ---
+    Able to remove projects
+
+Step 3: Create Dynamic project modules (today, this week, this month style projects)
+    No factory function needed (just one module for each time base)
+    Create three exported modules on one dynamicProjects.js file
+    Today:
+        Able to add tasks
+        Able to remove tasks
+        Able to mark tasks
+        Looks through all projects to see if any task needs to be finished "today"
+            Adds these tasks to today module
+    This Week:
+        Able to add tasks
+        Able to remove tasks
+        Able to mark tasks
+        Looks through all projects to see if any task needs to be finished "this week"
+            Adds these tasks to today module
+    This Month: 
+        Able to add tasks
+        Able to remove tasks
+        Able to mark tasks
+        Looks through all projects to see if any task needs to be finished "this month"
+            Adds these tasks to today module
+
+Step 4: Create a function that adds the important information to local storage
+    Includes all projects and other single tasks
+
+Step 5: Create DOM elements and styling (UGH)
