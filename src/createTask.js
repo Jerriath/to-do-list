@@ -1,46 +1,41 @@
-export default function (title, description, dueDate, priority) {
+export default (title, description, dueDate, priority) => {
     
     //Factory function for creating new task objects
+    //Objects include all accessor/mutator functions
     let newTask = {
         title,
         description,
         dueDate,
         priority,
-        getTitle: getTitle(),
-        getDescription: getDescription(),
-        getDueDate: getDueDate(),
-        getPriority: getPriority(),
 
+        //Accessor functions
+        getTitle: function() {
+            return title;
+        },
+        getDescription: function() {
+            return description;
+        },
+        getDueDate: function() {
+            return dueDate;
+        },
+        getPriority: function() {
+            return priority;
+        },
+
+        //Mutator functions
+        setTitle: function(newTitle) {
+            title = newTitle;
+        },
+        setDescription: function(newDescription) {
+            description = newDescription;
+        },
+        setDueDate: function(newDueDate) {
+            dueDate = newDueDate;
+        },
+        setPriority: function(newPriority) {
+            priority = newPriority;
+        },
     };
-
-    //Accessor functions
-    function getTitle() {
-        return this.title;
-    }
-    function getDescription() {
-        return this.description;
-    }
-    function getDueDate() {
-        return this.dueDate;
-    }
-    function getPriority() {
-        return this.priority;
-    }
-
-    //Mutator functions
-    function setTitle(newTitle) {
-        this.title = newTitle;
-    }
-    function setDescription(newDescription) {
-        this.description = newDescription;
-    }
-    function setDueDate(newDueDate) {
-        this.dueDate = newDueDate;
-    }
-    function setPriority(newPriority) {
-        this.priority = newPriority;
-    }
-
 
     return newTask;
 };
