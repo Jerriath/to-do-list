@@ -7,6 +7,7 @@ export default (title) => {
         taskArray: [], //Rough array with tasks randomly pushed on
         sortedTaskArray: [], //sorted task array (sorteded depending on sort option)
         addTask: function(newTask) {
+            newTask.project = this.title;
             this.taskArray.push(newTask);
         },
         //Used to find index of desired task title (can be found from DOM)

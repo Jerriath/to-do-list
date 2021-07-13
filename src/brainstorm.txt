@@ -18,8 +18,10 @@ Step 2: Create Project module for storing tasks (prob an array)
         By Name (alphabetical) ---
 
 Step 3: Create a container module that holds all the projects
-    Able to add projects
-    Able to remove projects
+    Able to add projects ---
+    Able to remove projects ---
+    Sort projectArray by name ---
+
 
 Step 4: Create Dynamic project modules (today, this week, this month style projects)
     No factory function needed (just one module for each time base)
@@ -36,7 +38,7 @@ Step 4: Create Dynamic project modules (today, this week, this month style proje
         Able to mark tasks
         Looks through all projects to see if any task needs to be finished "this week"
             Adds these tasks to today module
-    This Month: 
+    All tasks: 
         Able to add tasks
         Able to remove tasks
         Able to mark tasks
