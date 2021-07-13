@@ -4,15 +4,16 @@ export default function() {
     let dynamicProjectHolder = {
         todayTasks: [],
         weekTasks: [],
-        allTasks: [], //Created by merging projectHolder.groupAllTasks() with miscArray
+        allTasks: [],
         miscTasks: [], //Will hold random tasks not belonging to a project
         lateTasks: [], //Holds all tasks from allTasks that are past due date
-        clearArray: function(array) {
+        clearArray: function(array) { //Can be used on any of the arrays
             while (array.length != 0) {
                 array.pop();
             }
         },
-        createAllTasks: function(projectTasks) {
+        //projectTasks will get passed-in in index.js by the projectHolder
+        createAllTasks: function(projectTasks) { //Created by merging projectHolder.groupAllTasks() with miscArray
             this.allTasks = projectTasks.concat(this.miscTasks);
         },
         sortAllByDate: function() {
