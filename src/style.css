@@ -58,6 +58,34 @@
     cursor: pointer;
 }
 
+.createForm {
+    position: relative;
+    background: white;
+    width: 192px;
+    height: 125px;
+    padding: 10px;
+    visibility: hidden;
+}
+
+.titleInput {
+    background: rgb(175, 175, 175);
+    height: 20px;
+}
+
+.submitBtn {
+    background: rgb(175, 175, 175);
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 10px;
+    position: relative;
+    left: 45px;
+    top: 20px;
+    text-align: center;
+    height: 25px;
+    width: 100px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+
 button:hover {
     font-size: 20px;
     background: rgba(70, 70, 70, .3) !important;
@@ -71,4 +99,9 @@ h1 {
     top:20px; left:20px; bottom:0; right:0;
     margin: auto;
 
+}
+
+label {
+    font-size: 20px;
+    font-weight: 1000 !important;
 }

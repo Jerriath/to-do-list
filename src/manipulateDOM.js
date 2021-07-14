@@ -3,8 +3,6 @@
 
 export let domManager = {
 
-    //Cache DOM
     
-
 
 }

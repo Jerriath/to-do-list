@@ -29,12 +29,15 @@ export default function() {
     let todayBtn = document.createElement("button");
     todayBtn.classList.add("projectButton");
     todayBtn.textContent = "Today";
+    todayBtn.id = "todayBtn";
     let weekBtn = document.createElement("button");
     weekBtn.classList.add("projectButton");
     weekBtn.textContent = "This Week";
+    weekBtn.id = "weekBtn";
     let allBtn = document.createElement("button");
     allBtn.classList.add("projectButton");
     allBtn.textContent = "All";
+    allBtn.id = "allBtn";
     dynamicDiv.appendChild(todayBtn);
     dynamicDiv.appendChild(weekBtn);
     dynamicDiv.appendChild(allBtn);
@@ -42,6 +45,7 @@ export default function() {
     //-Create normal project holder
     let projectDiv = document.createElement("div");
     projectDiv.classList.add("projectDiv");
+    projectDiv.id = "projectDiv";
     let projectTitle = document.createElement("h2");
     projectTitle.textContent = "Projects: ";
     projectDiv.appendChild(projectTitle);
@@ -50,7 +54,35 @@ export default function() {
     addProject.textContent = "+";
     addProject.style.textAlign = "center";
     addProject.style.background = "rgba(125, 125, 125, 0.3)";
+    addProject.id = "addProject";
+    //-Create the addProject form-
+    let createForm = document.createElement("form");
+    createForm.classList.add("createForm");
+    createForm.id = "createForm";
+    let formTitle = document.createElement("h2");
+    formTitle.textContent = "New Project";
+    formTitle.style.margin = 0;
+    formTitle.style.textAlign = "center";
+    let titleLabel = document.createElement("label");
+    titleLabel.textContent = "Project Name: ";
+    titleLabel.style.fontFamily = "MyFont";
+    let titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.classList.add("titleInput");
+    titleInput.id = "titleInput";
+    let submitBtn = document.createElement("button");
+    submitBtn.classList.add("submitBtn");
+    submitBtn.textContent = "Create";
+    submitBtn.id = "submit";
+
+    createForm.appendChild(formTitle);
+    createForm.appendChild(titleLabel);
+    createForm.appendChild(titleInput);
+    createForm.appendChild(submitBtn);
+
     projectDiv.appendChild(addProject);
+    projectDiv.appendChild(createForm);
+    
 
     sidePanel.appendChild(dynamicDiv);
     sidePanel.appendChild(projectDiv);
