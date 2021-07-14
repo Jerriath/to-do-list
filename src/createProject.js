@@ -15,8 +15,12 @@ export default (title) => {
             let index = this.taskArray.findIndex(i => i.title === taskTitle);
             return index;
         },
-        removeTask: function(index) {
+        spliceTask: function(index) {
             this.taskArray.splice(index, 1);
+        },
+        removeTask: function(taskTitle) {
+            let index = findIndex(taskTitle);
+            this.spliceTask(index);
         },
         clearSortedArray: function() {
             this.sortedTaskArray.splice(0, this.sortedTaskArray.length);

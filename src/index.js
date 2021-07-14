@@ -1,7 +1,15 @@
+import PubSub from "pubsub-js";
 import CreateTask from "./createTask.js";
 import CreateProject from "./createProject.js";
 import ProjectHolder from "./projectHolder.js";
 import DynamicProjectHolder from "./dynamicTaskHolder.js";
+import RenderPage from "./renderPage.js";
+
+//PubSub functions
+//Add all the PubSub.subscribe stuff here
+
+let renderPage = RenderPage;
+renderPage();
 
 let testProject = CreateProject("testProject");
 let otherProject = CreateProject("otherProject");

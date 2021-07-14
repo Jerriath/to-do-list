@@ -25,25 +25,13 @@ Step 3: Create a container module that holds all the projects
 
 Step 4: Create Dynamic project modules (today, this week, this month style projects)
     No factory function needed (just one array for each time base)
-    Create three exported modules on one dynamicProjects.js file
-    Today:
-        Able to add tasks
-        Able to remove tasks
-        Able to mark tasks
-        Looks through all projects to see if any task needs to be finished "today" ---
-            Adds these tasks to today module ---
-    This Week:
-        Able to add tasks
-        Able to remove tasks
-        Able to mark tasks
-        Looks through all projects to see if any task needs to be finished "this week" ---
-            Adds these tasks to today module ---
-    All tasks: 
-        Able to add tasks
-        Able to remove tasks
-        Able to mark tasks
-        Looks through all projects to see if any task needs to be finished "this month" ---
-            Adds these tasks to today module ---
+    Create an object that holds four separate arrays for today, week, all, and misc
+        First have a way to create the all tasks array (done by projectHolder) --- 
+        Be able to modify the project array and dynamic array
+            Upon modifying the dynamicPH, save the task title, look for it in it's 
+            corresponding project, and modify it. Then remake the allTasks array
+
+            Upon modifying the PH or miscArray, immediately remake the allTasks array
 
     THE REST OF STEP 4 REQUIRES A PUB/SUB TO LINK PROJECTS TO DYNAMIC PROJECTS
 

@@ -8,6 +8,7 @@ export default (title, description, dueDate, priority) => {
         dueDate,
         priority,
         status: false,
+        project: null,
 
         //Accessor functions
         getTitle: function() {
