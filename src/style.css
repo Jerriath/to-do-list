@@ -1,7 +1,7 @@
 @font-face {
     font-family: "MyFont";
     src: url("./ZenLoop-Regular.woff") format("woff");
-    font-weight: 600;
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -36,7 +36,33 @@
     width: 20%;
     top: 120px;
     left: 0px;
+}
 
+.projectDiv {
+    display: flex;
+    flex-direction: column;
+    font-family: "MyFont";
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.projectButton {
+    position: relative;
+    text-align: left;
+    font-size: 18px;
+    padding: 5px;
+    background: transparent;
+    border: transparent;
+    transition: all 0.2s linear;
+    height: 30px;
+    cursor: pointer;
+}
+
+button:hover {
+    font-size: 20px;
+    background: rgba(70, 70, 70, .3) !important;
+    border:rgba(100, 100, 100, .3);
+    border-radius: 10px;
 }
 
 h1 {
