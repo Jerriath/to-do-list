@@ -5,8 +5,19 @@
     font-style: normal;
 }
 
+#displayArea {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    left: 15%;
+    top: 10%;
+    margin: auto;
+    display: inline-block;
+    height: 1000px;
+    width: 900px;
+}
+
 .header {
-    padding: 10px;
     text-align: left;
     background: rgb(125, 125, 125);
     color: black;
@@ -15,16 +26,14 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 100px;
+    height: 10%;
+    display: inline-block;
 }
 
 .titleHolder {
-    position: fixed;
-    top: 12px;; 
-    right: 0; 
-    bottom: 0; 
-    left: 15px;
     margin: auto;
+    height: 100%;
+    width: 100%;
 }
 
 .sidePanel {
@@ -33,9 +42,11 @@
     flex-direction: column;
     height: 100%;
     background: rgb(175, 175, 175);
-    width: 20%;
-    top: 120px;
+    width: 15%;
+    top: 10%;
     left: 0px;
+    min-width: 270px;
+    display: inline-block;
 }
 
 .projectDiv {
@@ -44,6 +55,10 @@
     font-family: "MyFont";
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.addProjectDiv {
+    align-items: center;
 }
 
 .projectButton {
@@ -56,6 +71,14 @@
     transition: all 0.2s linear;
     height: 30px;
     cursor: pointer;
+}
+
+.selected {
+    font-size: 20px;
+    background: rgba(70, 70, 70, .3) !important;
+    border:rgba(100, 100, 100, .3);
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 .createForm {

@@ -38,10 +38,11 @@ export default function() {
     allBtn.classList.add("projectButton");
     allBtn.textContent = "All";
     allBtn.id = "allBtn";
+    dynamicDiv.appendChild(allBtn);
     dynamicDiv.appendChild(todayBtn);
     dynamicDiv.appendChild(weekBtn);
-    dynamicDiv.appendChild(allBtn);
-
+    allBtn.classList.add("selected");
+    
     //-Create normal project holder
     let projectDiv = document.createElement("div");
     projectDiv.classList.add("projectDiv");
@@ -55,6 +56,7 @@ export default function() {
     addProject.style.textAlign = "center";
     addProject.style.background = "rgba(125, 125, 125, 0.3)";
     addProject.id = "addProject";
+    addProject.style.width = "100%";
     //-Create the addProject form-
     let createForm = document.createElement("form");
     createForm.classList.add("createForm");
@@ -74,14 +76,17 @@ export default function() {
     submitBtn.classList.add("submitBtn");
     submitBtn.textContent = "Create";
     submitBtn.id = "submit";
+    let addProjectDiv = document.createElement("div");
+    addProjectDiv.appendChild(addProject);
+    addProjectDiv.appendChild(createForm);
+    addProjectDiv.classList.add("addProjectDiv");
 
     createForm.appendChild(formTitle);
     createForm.appendChild(titleLabel);
     createForm.appendChild(titleInput);
     createForm.appendChild(submitBtn);
 
-    projectDiv.appendChild(addProject);
-    projectDiv.appendChild(createForm);
+    projectDiv.appendChild(addProjectDiv);
     
 
     sidePanel.appendChild(dynamicDiv);
