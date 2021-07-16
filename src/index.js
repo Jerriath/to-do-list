@@ -4,6 +4,7 @@ import CreateProject from "./createProject.js";
 import ProjectHolder from "./projectHolder.js";
 import DynamicProjectHolder from "./dynamicTaskHolder.js";
 import RenderPage from "./renderPage.js";
+import { createAll } from "./manipulateDOM.js";
 
 //PubSub functions
 //Add all the PubSub.subscribe stuff here
@@ -11,6 +12,9 @@ import RenderPage from "./renderPage.js";
 //Render initial page elements
 let renderPage = RenderPage;
 renderPage();
+createAll();
+let projectHolder = ProjectHolder();
+let dynamicProjectHolder = DynamicProjectHolder();
 
 
 //Cache DOM
@@ -19,14 +23,18 @@ let weekBtn = document.querySelector("#weekBtn");
 let allBtn = document.querySelector("#allBtn");
 let addProject = document.querySelector("#addProject");
 let createForm = document.querySelector("#createForm");
+let addprojectDiv = document.querySelector("#addProjectDiv");
+let projectDiv = document.querySelector("#projectDiv");
 let titleInput = document.querySelector("#titleInput");
 let submitBtn = document.querySelector("#submit");
 createForm.style.visibility = "hidden";
+createForm.style.opacity = 0;
 
 
 
-//Add event listeners to buttons
+//Add event listeners to addProject button
 addProject.addEventListener("click", toggleCreateForm);
+
 
 
 
@@ -36,13 +44,49 @@ function toggleCreateForm() {
     if (visibility == "hidden")
     {
         createForm.style.visibility = "visible";
+        createForm.style.opacity = 1;
         addProject.textContent = "X";
     }
     else 
     {
         titleInput.value = "";
-        createForm.style.visibility = "hidden";
+        createForm.style.opacity = 0;
+        window.setTimeout(function(){createForm.style.visibility = "hidden"}, 200);
         addProject.textContent = "+";
+    }
+}
+
+function initProject(title) {
+    let newProject = CreateProject(title);
+    projectHolder.addProject(newProject);
+    createProjectDOM();
+}
+
+function createProjectDOM() {
+    while(projectDiv.childNodes.length != 2) {
+        projectDiv.remove(projectDiv.childNodes[1]);
+    }
+    let numOfProj = projectHolder.getArrayLength();
+    for (let i = 0; i < numOfProj; i++) {
+        let currentProject = projectHolder.projectArray[i];
+
+        //Create the project button element
+        let currentButton = document.createElement("button");
+        currentButton.classList.add("projectButton");
+        currentButton.textContent = currentProject.title;
+        projectDiv.insertBefore(currentButton, addProjectDiv);
+
+    }
+}
+
+function spliceString(string, length) {
+    if (string.length > length) {nodelist
+        string = string.substring(0, length);
+        string = string + "...";
+        return string;
+    }
+    else {
+        return string;
     }
 }
 
@@ -50,8 +94,6 @@ function test() {
     let testProject = CreateProject("testProject");
     let otherProject = CreateProject("otherProject");
     let anotherProject = CreateProject("anotherProject");
-    let projectHolder = ProjectHolder();
-    let dynamicProjectHolder = DynamicProjectHolder();
     
     let testTask = CreateTask("Second Task", "idk1", new Date(2021, 6, 25), "medium");
     let otherTask = CreateTask("First Task", "idk2", new Date(2021, 6, 13), "low");

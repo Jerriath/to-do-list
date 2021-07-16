@@ -4,6 +4,7 @@ export default function() {
 
     //Cache DOM
     let body = document.querySelector("body");
+    let displayArea = document.querySelector("#displayArea");
 
     
     //-----Create header-----
@@ -17,9 +18,11 @@ export default function() {
     header.appendChild(titleHolder);
 
 
+
     //-----Create side panel-----
     let sidePanel = document.createElement("div");
     sidePanel.classList.add("sidePanel");
+
     //-Create dynamic project holder-
     let dynamicDiv = document.createElement("div");
     dynamicDiv.classList.add("projectDiv");
@@ -57,6 +60,7 @@ export default function() {
     addProject.style.background = "rgba(125, 125, 125, 0.3)";
     addProject.id = "addProject";
     addProject.style.width = "100%";
+
     //-Create the addProject form-
     let createForm = document.createElement("form");
     createForm.classList.add("createForm");
@@ -68,6 +72,8 @@ export default function() {
     let titleLabel = document.createElement("label");
     titleLabel.textContent = "Project Name: ";
     titleLabel.style.fontFamily = "MyFont";
+    titleLabel.style.position = "absolute";
+    titleLabel.style.left = "10px";
     let titleInput = document.createElement("input");
     titleInput.type = "text";
     titleInput.classList.add("titleInput");
@@ -80,17 +86,19 @@ export default function() {
     addProjectDiv.appendChild(addProject);
     addProjectDiv.appendChild(createForm);
     addProjectDiv.classList.add("addProjectDiv");
+    addProjectDiv.id = "addProjectDiv";
 
+    //Append createForm elements
     createForm.appendChild(formTitle);
     createForm.appendChild(titleLabel);
     createForm.appendChild(titleInput);
     createForm.appendChild(submitBtn);
-
     projectDiv.appendChild(addProjectDiv);
-    
 
+    //Append to sidePanel
     sidePanel.appendChild(dynamicDiv);
     sidePanel.appendChild(projectDiv);
+
 
     //Append elements to body
     body.appendChild(header);

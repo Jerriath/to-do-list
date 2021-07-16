@@ -29,6 +29,9 @@ export default function() {
                 }
             }
             return allTasksArray;
+        },
+        getArrayLength: function() {
+            return this.projectArray.length;
         }
     }
     return projectHolder;
