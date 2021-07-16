@@ -4,7 +4,7 @@ import CreateProject from "./createProject.js";
 import ProjectHolder from "./projectHolder.js";
 import DynamicProjectHolder from "./dynamicTaskHolder.js";
 import RenderPage from "./renderPage.js";
-import { createAll } from "./manipulateDOM.js";
+import { createAll } from "./createDisplay.js";
 
 //PubSub functions
 //Add all the PubSub.subscribe stuff here
@@ -25,19 +25,38 @@ let addProject = document.querySelector("#addProject");
 let createForm = document.querySelector("#createForm");
 let addprojectDiv = document.querySelector("#addProjectDiv");
 let projectDiv = document.querySelector("#projectDiv");
+let dynamicDiv = document.querySelector("#dynamicDiv");
 let titleInput = document.querySelector("#titleInput");
 let submitBtn = document.querySelector("#submit");
 createForm.style.visibility = "hidden";
 createForm.style.opacity = 0;
 
 
-
 //Add event listeners to addProject button
 addProject.addEventListener("click", toggleCreateForm);
+submitBtn.addEventListener("click", initProject);
 
 
 
+function selectProject(e) {
+    unselect();
+    e.target.classList.add("selected");
+}
 
+function unselect() {
+    for (let i = 0; i < dynamicDiv.childNodes.length; i ++) {
+        if (dynamicDiv.childNodes[i].classList.length > 1)
+        {
+            dynamicDiv.childNodes[i].classList.remove("selected");
+        }
+    }
+    for (let i = 0; i < projectDiv.childNodes.length; i ++) {
+        if (projectDiv.childNodes[i].classList.length > 1)
+        {
+            projectDiv.childNodes[i].classList.remove("selected");
+        }
+    }
+}
 
 function toggleCreateForm() {
     let visibility = createForm.style.visibility;
@@ -56,15 +75,17 @@ function toggleCreateForm() {
     }
 }
 
-function initProject(title) {
+function initProject() {
+    let title = titleInput.value;
     let newProject = CreateProject(title);
     projectHolder.addProject(newProject);
     createProjectDOM();
+    toggleCreateForm();
 }
 
 function createProjectDOM() {
     while(projectDiv.childNodes.length != 2) {
-        projectDiv.remove(projectDiv.childNodes[1]);
+        projectDiv.childNodes[1].remove();
     }
     let numOfProj = projectHolder.getArrayLength();
     for (let i = 0; i < numOfProj; i++) {
@@ -74,8 +95,14 @@ function createProjectDOM() {
         let currentButton = document.createElement("button");
         currentButton.classList.add("projectButton");
         currentButton.textContent = currentProject.title;
+        currentButton.addEventListener("click", function(e){
+            selectProject(e);
+        });
         projectDiv.insertBefore(currentButton, addProjectDiv);
-
+        if (i == numOfProj - 1) {
+            unselect();
+            currentButton.classList.add("selected");
+        }
     }
 }
 

@@ -26,6 +26,7 @@ export default function() {
     //-Create dynamic project holder-
     let dynamicDiv = document.createElement("div");
     dynamicDiv.classList.add("projectDiv");
+    dynamicDiv.id = "dynamicDiv";
     let dynamicTitle = document.createElement("h2");
     dynamicTitle.textContent = "General: ";
     dynamicDiv.appendChild(dynamicTitle);
@@ -41,9 +42,14 @@ export default function() {
     allBtn.classList.add("projectButton");
     allBtn.textContent = "All";
     allBtn.id = "allBtn";
+    let miscBtn = document.createElement("button");
+    miscBtn.classList.add("projectButton");
+    miscBtn.textContent = "Misc";
+    miscBtn.id = "miscBtn";
     dynamicDiv.appendChild(allBtn);
     dynamicDiv.appendChild(todayBtn);
     dynamicDiv.appendChild(weekBtn);
+    dynamicDiv.appendChild(miscBtn);
     allBtn.classList.add("selected");
     
     //-Create normal project holder
@@ -81,6 +87,7 @@ export default function() {
     let submitBtn = document.createElement("button");
     submitBtn.classList.add("submitBtn");
     submitBtn.textContent = "Create";
+    submitBtn.type = "button";
     submitBtn.id = "submit";
     let addProjectDiv = document.createElement("div");
     addProjectDiv.appendChild(addProject);
