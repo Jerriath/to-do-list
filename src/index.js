@@ -9,16 +9,20 @@ import { createDisplay, getTitle } from "./createDisplay.js";
 //PubSub functions
 //Add all the PubSub.subscribe stuff here
 
-//Render initial page elements
+//Initialized projectHolders
 let projectHolder = ProjectHolder();
 let dynamicProjectHolder = DynamicProjectHolder();
-let renderPage = RenderPage;
-renderPage();
-createDisplay("All", dynamicProjectHolder.allTasks);
+test();
+dynamicProjectHolder.createAllTasks(projectHolder.groupAllTasks());
+
+//Render initial page elements
+RenderPage();
+let allTasks = dynamicProjectHolder.allTasks;
+createDisplay("All", allTasks);
 
 
 
-//Cache DOM
+//Cache DOM for sidePanel
 let todayBtn = document.querySelector("#todayBtn");
 let weekBtn = document.querySelector("#weekBtn");
 let allBtn = document.querySelector("#allBtn");
@@ -26,14 +30,12 @@ let miscBtn = document.querySelector("#miscBtn");
 let lateBtn = document.querySelector("#lateBtn");
 let addProject = document.querySelector("#addProject");
 let createForm = document.querySelector("#createForm");
-let addprojectDiv = document.querySelector("#addProjectDiv");
 let projectDiv = document.querySelector("#projectDiv");
 let dynamicDiv = document.querySelector("#dynamicDiv");
 let titleInput = document.querySelector("#titleInput");
 let submitBtn = document.querySelector("#submit");
 createForm.style.visibility = "hidden";
 createForm.style.opacity = 0;
-
 
 //Add event listeners to addProject button
 todayBtn.addEventListener("click", function(e){selectProject(e);});
@@ -47,16 +49,40 @@ titleInput.addEventListener("keypress", function(e) {
     if (e.key == "Enter") {
         initProject();
     }
-})
+});
+
+//Add event listeners to be able to create Tasks
 
 
+//Function to create a new task
+function createNewTask(projectTitle) {
+    //Cache DOM for displayArea
+    let taskTitle = document.querySelector("#taskTitle");
+    let taskDate = document.querySelector("#taskDate");
+    let taskPriority = document.querySelector("#taskPriority");
+    let newTask = CreateTask(taskTitle, taskDate, taskPriority);
+    //Find the project in our project holders to add the task
+    if (projectTitle == "All" || projectTitle == "Today" || projectTitle == "This Week" || projectTitle == "Misc") {
+        dynamicProjectHolder.addMiscTask(newTask);
+    }
+    else {
+        let numOfProj = projectHolder.getArrayLength;
+        for (let i = 0; i < numOfProj; i++) {
+            if (projectTitle == projectHolder.projectArray[i].title) {
+                projectHolder.projectArray[i].addTask(newTask);
+            }
+        }
+    }
+}
 
+//Function to highlight the project that is currently selected
 function selectProject(e) {
     unselect();
     e.target.classList.add("selected");
     console.log(e);
 }
 
+//Function that unselects all projects; runs before every new selectProject call
 function unselect() {
     for (let i = 0; i < dynamicDiv.childNodes.length; i ++) {
         if (dynamicDiv.childNodes[i].classList.length > 1)
@@ -136,22 +162,22 @@ function test() {
     let otherProject = CreateProject("otherProject");
     let anotherProject = CreateProject("anotherProject");
     
-    let testTask = CreateTask("Second Task", "idk1", new Date(2021, 6, 25), "medium");
-    let otherTask = CreateTask("First Task", "idk2", new Date(2021, 6, 13), "low");
-    let anotherTask = CreateTask("Third Task", "idk2", new Date(2021, 6, 16), "high");
-    let anotherNotherTask = CreateTask("Fourth Task", "idk2", new Date(2021, 6, 2), "low");
-    let testTask1 = CreateTask("Second Task", "idk1", new Date(2021, 6, 25), "medium");
-    let otherTask1 = CreateTask("First Task", "idk2", new Date(2021, 6, 13), "low");
-    let anotherTask1 = CreateTask("Third Task", "idk2", new Date(2021, 6, 16), "high");
-    let anotherNotherTask1 = CreateTask("Fourth Task", "idk2", new Date(2021, 6, 2), "low");
-    let testTask2 = CreateTask("Second Task", "idk1", new Date(2021, 6, 25), "medium");
-    let otherTask2 = CreateTask("First Task", "idk2", new Date(2021, 6, 13), "low");
-    let anotherTask2 = CreateTask("Third Task", "idk2", new Date(2021, 6, 16), "high");
-    let anotherNotherTask2 = CreateTask("Fourth Task", "idk2", new Date(2021, 6, 2), "low");
-    let miscTask = CreateTask("Second Task", "idk1", new Date(2021, 6, 25), "medium");
-    let otherMiscTask = CreateTask("First Task", "idk2", new Date(2021, 6, 13), "low");
-    let anotherMiscTask = CreateTask("Third Task", "idk2", new Date(2021, 6, 16), "high");
-    let anotherNotherMiscTask = CreateTask("Fourth Task", "idk2", new Date(2021, 6, 2), "low");
+    let testTask = CreateTask("Second Task", new Date(2021, 6, 25), "medium");
+    let otherTask = CreateTask("First Task", new Date(2021, 6, 13), "low");
+    let anotherTask = CreateTask("Third Task", new Date(2021, 6, 16), "high");
+    let anotherNotherTask = CreateTask("Fourth Task", new Date(2021, 6, 2), "low");
+    let testTask1 = CreateTask("Second Task", new Date(2021, 6, 25), "medium");
+    let otherTask1 = CreateTask("First Task", new Date(2021, 6, 13), "low");
+    let anotherTask1 = CreateTask("Third Task", new Date(2021, 6, 16), "high");
+    let anotherNotherTask1 = CreateTask("Fourth Task", new Date(2021, 6, 2), "low");
+    let testTask2 = CreateTask("Second Task", new Date(2021, 6, 25), "medium");
+    let otherTask2 = CreateTask("First Task", new Date(2021, 6, 13), "low");
+    let anotherTask2 = CreateTask("Third Task", new Date(2021, 6, 16), "high");
+    let anotherNotherTask2 = CreateTask("Fourth Task", new Date(2021, 6, 2), "low");
+    let miscTask = CreateTask("Second Task", new Date(2021, 6, 25), "medium");
+    let otherMiscTask = CreateTask("First Task", new Date(2021, 6, 13), "low");
+    let anotherMiscTask = CreateTask("Third Task", new Date(2021, 6, 16), "high");
+    let anotherNotherMiscTask = CreateTask("Fourth Task", new Date(2021, 6, 2), "low");
     
     testProject.addTask(testTask);
     testProject.addTask(otherTask);
@@ -170,14 +196,11 @@ function test() {
     projectHolder.addProject(otherProject);
     projectHolder.addProject(anotherProject);
     
-    let allProjectTasks = projectHolder.groupAllTasks();
-    
     dynamicProjectHolder.addMiscTask(miscTask);
     dynamicProjectHolder.addMiscTask(otherMiscTask);
     dynamicProjectHolder.addMiscTask(anotherMiscTask);
     dynamicProjectHolder.addMiscTask(anotherNotherMiscTask);
     
-    dynamicProjectHolder.createAllTasks(allProjectTasks);
     
     dynamicProjectHolder.sortAllByDate();
     dynamicProjectHolder.createTodayTasks();

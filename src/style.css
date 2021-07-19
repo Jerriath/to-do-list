@@ -76,7 +76,7 @@
 
 .selected {
     font-size: 20px;
-    background: rgba(70, 70, 70, .3) !important;
+    background: rgba(70, 70, 70, .5) !important;
     border:rgba(100, 100, 100, .3);
     border-radius: 10px;
     font-weight: bold;
@@ -148,11 +148,16 @@
 
 .task {
     height: 30px;
-    width: 75%;
+    width: 74%;
+    margin-left: 1%;
     display: flex;
     flex-direction: row;
     font-family: "MyFont";
     font-size: 25px !important;
+    justify-content: space-around;
+    color: black;
+    background-color:rgba(70, 70, 70, .3);
+    border: 1px solid rgba(125, 125, 125, 0.5);
 }
 
 .taskForm {
@@ -163,19 +168,20 @@
     display: flex;
     flex-direction: row;
     transition: opacity 0.2s linear;
-    width: 66%;
+    width: 80%;
     margin: auto;
 }
 
 .addTaskDiv {
     align-items: center;
     text-align: center;
-    width: 75%;
+    width: 74.2%;
+    margin-left: 1%;
 }
 
 button:hover {
     font-size: 20px;
-    background: rgba(70, 70, 70, .3) !important;
+    background: rgba(125, 125, 125, .5) !important;
     border:rgba(100, 100, 100, .3);
     border-radius: 10px;
 }
@@ -186,6 +192,10 @@ h1 {
     top:20px; left:20px; bottom:0; right:0;
     margin: auto;
 
+}
+
+p {
+    margin: auto;
 }
 
 label {

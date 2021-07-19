@@ -1,6 +1,7 @@
 //This module will be used to change only the task display area of the page
 import { format } from "date-fns";
 
+//Function for creating the initial displayArea upon first clicking onto a new project
 export function createDisplay(title, array) {
 
     //Cache DOM
@@ -23,11 +24,33 @@ export function createDisplay(title, array) {
     titleDiv.classList.add("projectTitle");
     let titleText = document.createElement("h2");
     titleText.textContent = title;
+    titleText.id = "titleText";
     titleText.classList.add("titleText");
     titleDiv.appendChild(titleText);
     projectHeader.appendChild(titleDiv);
 
     //-----Create the project's tasks with a loop and append to taskHolder
+    //-Create the task Header/Legend-
+    let taskHeader = document.createElement("div");
+    taskHeader.classList.add("task");
+    let titleLegend = document.createElement("p");
+    let dueDateLegend = document.createElement("p");
+    let projectLegend = document.createElement("p");
+    let priorityLegend = document.createElement("p");
+    let statusLegend = document.createElement("p");
+    titleLegend.textContent = "Title";
+    dueDateLegend.textContent = "Due Date";
+    projectLegend.textContent = "Project";
+    priorityLegend.textContent = "Priority";
+    statusLegend.textContent = "Status";
+    taskHeader.appendChild(titleLegend);
+    taskHeader.appendChild(dueDateLegend);
+    taskHeader.appendChild(projectLegend);
+    taskHeader.appendChild(priorityLegend);
+    taskHeader.appendChild(statusLegend);
+    taskHeader.style.textDecoration = "underline";
+    taskHeader.style.fontWeight = "bold";
+    taskHolder.appendChild(taskHeader);
     let numOfTasks = array.length;
     for (let i = 0; i < numOfTasks; i ++) {
         let currentTask = array[i];
@@ -37,26 +60,38 @@ export function createDisplay(title, array) {
         let dueDate = document.createElement("p");
         let project = document.createElement("p");
         let priority = document.createElement("p");
+        let status = document.createElement("p");
         title.textContent = currentTask.title;
-        dueDate.textContent = format(currentTask.dueDate);
+        dueDate.textContent = format(currentTask.dueDate, "MM/dd/yyyy");
         project.textContent = currentTask.project;
         priority.textContent = currentTask.priority;
+        if (currentTask.status) {
+            status.textContent = "Completed";
+        }
+        else {
+            status.textContent = "Not Completed";
+        }
+        if (i%2 == 0) {
+            taskDiv.style.backgroundColor = "rgba(220, 220, 220, 0.5)";
+        }
         taskDiv.appendChild(title);
         taskDiv.appendChild(dueDate);
         taskDiv.appendChild(project);
         taskDiv.appendChild(priority);
+        taskDiv.appendChild(status);
         taskHolder.appendChild(taskDiv);
     }
+
 
     //Create the addTask button and append at the bottom of the taskHolder
     let addTask = document.createElement("button");
     addTask.classList.add("projectButton");
     addTask.textContent = "+";
     addTask.style.textAlign = "center";
-    addTask.style.background = "rgba(125, 125, 125, 0.3)";
+    addTask.style.background = "rgba(100, 100, 100, 0.3)";
     addTask.id = "addTask";
-    addTask.style.width = "99%";
-    addTask.style.marginLeft = "1%";
+    addTask.style.width = "100%";
+    addTask.style.height = "50px";
     //-Create a task form to add tasks-
     let taskForm = document.createElement("div");
     taskForm.classList.add("taskForm");
@@ -87,6 +122,11 @@ export function createDisplay(title, array) {
     let high = document.createElement("option");
     high.value = "low";
     high.text = "high";
+    let submitBtn = document.createElement("button");
+    submitBtn.classList.add("submitBtn");
+    submitBtn.id = "taskSubmit";
+    submitBtn.style.top = "0px";
+    submitBtn.textContent = "Submit";
     priorityInput.appendChild(high);
     taskForm.appendChild(titleLabel);
     taskForm.appendChild(titleInput);
@@ -94,6 +134,7 @@ export function createDisplay(title, array) {
     taskForm.appendChild(dateInput);
     taskForm.appendChild(priorityLabel);
     taskForm.appendChild(priorityInput);
+    taskForm.appendChild(submitBtn);
     taskForm.style.visibility = "hidden";
     taskForm.style.opacity = 0;
     let addTaskDiv = document.createElement("div");
@@ -102,6 +143,30 @@ export function createDisplay(title, array) {
     addTaskDiv.appendChild(taskForm);
     taskHolder.appendChild(addTaskDiv);
     addTask.addEventListener("click", toggleTaskForm)
+    submitBtn.addEventListener("click", addTask)
+}
+
+//Function for refreshing the taskHolder for when a new Task is added
+export function refreshTasks(array) {
+    let numOfTasks = array.length;
+    for (let i = 0; i < numOfTasks; i ++) {
+        let currentTask = array[i];
+        let taskDiv = document.createElement("div");
+        taskDiv.classList.add("task");
+        let title = document.createElement("p");
+        let dueDate = document.createElement("p");
+        let project = document.createElement("p");
+        let priority = document.createElement("p");
+        title.textContent = currentTask.title;
+        dueDate.textContent = format(currentTask.dueDate);
+        project.textContent = currentTask.project;
+        priority.textContent = currentTask.priority;
+        taskDiv.appendChild(title);
+        taskDiv.appendChild(dueDate);
+        taskDiv.appendChild(project);
+        taskDiv.appendChild(priority);
+        taskHolder.appendChild(taskDiv);
+    }
 }
 
 //Function to toggle task create form
