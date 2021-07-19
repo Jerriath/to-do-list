@@ -4,23 +4,26 @@ import CreateProject from "./createProject.js";
 import ProjectHolder from "./projectHolder.js";
 import DynamicProjectHolder from "./dynamicTaskHolder.js";
 import RenderPage from "./renderPage.js";
-import { createAll } from "./createDisplay.js";
+import { createDisplay, getTitle } from "./createDisplay.js";
 
 //PubSub functions
 //Add all the PubSub.subscribe stuff here
 
 //Render initial page elements
-let renderPage = RenderPage;
-renderPage();
-createAll();
 let projectHolder = ProjectHolder();
 let dynamicProjectHolder = DynamicProjectHolder();
+let renderPage = RenderPage;
+renderPage();
+createDisplay("All", dynamicProjectHolder.allTasks);
+
 
 
 //Cache DOM
 let todayBtn = document.querySelector("#todayBtn");
 let weekBtn = document.querySelector("#weekBtn");
 let allBtn = document.querySelector("#allBtn");
+let miscBtn = document.querySelector("#miscBtn");
+let lateBtn = document.querySelector("#lateBtn");
 let addProject = document.querySelector("#addProject");
 let createForm = document.querySelector("#createForm");
 let addprojectDiv = document.querySelector("#addProjectDiv");
@@ -33,14 +36,25 @@ createForm.style.opacity = 0;
 
 
 //Add event listeners to addProject button
+todayBtn.addEventListener("click", function(e){selectProject(e);});
+weekBtn.addEventListener("click", function(e){selectProject(e);});
+allBtn.addEventListener("click", function(e){selectProject(e);});
+miscBtn.addEventListener("click", function(e){selectProject(e);});
+lateBtn.addEventListener("click", function(e){selectProject(e);});
 addProject.addEventListener("click", toggleCreateForm);
 submitBtn.addEventListener("click", initProject);
+titleInput.addEventListener("keypress", function(e) {
+    if (e.key == "Enter") {
+        initProject();
+    }
+})
 
 
 
 function selectProject(e) {
     unselect();
     e.target.classList.add("selected");
+    console.log(e);
 }
 
 function unselect() {

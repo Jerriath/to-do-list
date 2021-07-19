@@ -120,12 +120,57 @@
 .projectHeader {
     width: 100%;
     height: 10%;
+    display: flex;
+    flex-direction: row;
+}
+
+.projectTitle {
+    width: 75%;
+    height: 100%;
+    font-size: 40px;
+    font-family: "MyFont";
+}
+
+.titleText {
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    text-decoration: underline;
 }
 
 .taskHolder {
     height: 90%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
+.task {
+    height: 30px;
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    font-family: "MyFont";
+    font-size: 25px !important;
+}
+
+.taskForm {
+    align-items: center;
+    font-family: "MyFont";
+    justify-content: space-around;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    transition: opacity 0.2s linear;
+    width: 66%;
+    margin: auto;
+}
+
+.addTaskDiv {
+    align-items: center;
+    text-align: center;
+    width: 75%;
 }
 
 button:hover {

@@ -4,7 +4,6 @@ export default function() {
 
     //Cache DOM
     let body = document.querySelector("body");
-    let displayArea = document.querySelector("#displayArea");
 
     
     //-----Create header-----
@@ -46,10 +45,15 @@ export default function() {
     miscBtn.classList.add("projectButton");
     miscBtn.textContent = "Misc";
     miscBtn.id = "miscBtn";
+    let lateBtn = document.createElement("button");
+    lateBtn.classList.add("projectButton");
+    lateBtn.textContent = "Late";
+    lateBtn.id = "lateBtn";
     dynamicDiv.appendChild(allBtn);
     dynamicDiv.appendChild(todayBtn);
     dynamicDiv.appendChild(weekBtn);
     dynamicDiv.appendChild(miscBtn);
+    dynamicDiv.appendChild(lateBtn);
     allBtn.classList.add("selected");
     
     //-Create normal project holder
@@ -68,7 +72,7 @@ export default function() {
     addProject.style.width = "100%";
 
     //-Create the addProject form-
-    let createForm = document.createElement("form");
+    let createForm = document.createElement("div");
     createForm.classList.add("createForm");
     createForm.id = "createForm";
     let formTitle = document.createElement("h2");
