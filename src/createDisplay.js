@@ -16,8 +16,8 @@ export function createDisplay(title, array) {
     taskHolder.classList.add("taskHolder");
     projectHeader.id = "projectHeader";
     taskHolder.id = "taskHolder";
-    displayArea.insertBefore(projectHeader, document.querySelector("#addTaskDiv"));
-    displayArea.insertBefore(taskHolder, document.querySelector("#addTaskDiv"));
+    displayArea.appendChild(projectHeader);
+    displayArea.appendChild(taskHolder);
 
     //-----Create project title elements and append to projectHeader-----
     let titleDiv = document.createElement("div");
@@ -71,7 +71,7 @@ export function createDisplay(title, array) {
         project.style.width = "20%";
         priority.style.width = "10%";
         status.style.width = "10%";
-        title.textContent = currentTask.title;
+        title.textContent = spliceString(currentTask.title, 45);
         dueDate.textContent = format(currentTask.dueDate, "MM/dd/yyyy");
         project.textContent = currentTask.project;
         priority.textContent = currentTask.priority;
@@ -237,5 +237,17 @@ export function getTaskArray(title, dynamicProjectHolder, projectHolder) {
                 return projectHolder.projectArray[i].taskArray;
             }
         }
+    }
+}
+
+//Same function from index.js; This is very bad practice but I was being lazy
+function spliceString(string, length) {
+    if (string.length > length) {nodelist
+        string = string.substring(0, length);
+        string = string + "...";
+        return string;
+    }
+    else {
+        return string;
     }
 }

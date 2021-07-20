@@ -17,8 +17,6 @@ test();
 //Render initial page elements
 RenderPage();
 recreateDynamicArrays();
-let allTasks = dynamicProjectHolder.allTasks;
-createDisplay("All", allTasks);
 
 //Cache DOM for sidePanel
 let todayBtn = document.querySelector("#todayBtn");
@@ -37,6 +35,11 @@ createForm.style.opacity = 0;
 createProjectDOM(); //Adds the projects in the project holder to the sidePanel
 unselect();
 allBtn.classList.add("selected");
+
+//Display All tasks on boot
+let allTasks = dynamicProjectHolder.allTasks;
+createDisplay("All", allTasks);
+reattachTaskListener();
 
 //Add event listeners to projectButtons
 todayBtn.addEventListener("click", function(e){
@@ -82,21 +85,21 @@ titleInput.addEventListener("keypress", function(e) {
     }
 });
 
-//Cache DOM for displayArea
-let taskSubmit = document.querySelector("#taskSubmit");
 
-//Add event listeners to be able to create Tasks
-taskSubmit.addEventListener("click", function() {
-    let currentTitle = document.querySelector("#titleText").textContent;
-    createNewTask(currentTitle);
-});
+
+//-----Functions deal with the creation of a new task' Must update dynamic PH and reattach the event listener for creating new tasks-----
 
 //Function to create a new task and adds it to the appropriate project
 function createNewTask(projectTitle) {
     //Cache DOM for displayArea
     let taskTitle = document.querySelector("#taskTitle").value;
     let taskDate = document.querySelector("#taskDate").value.split("-"); //Returns date in yyyy/mm/dd string format; splitting into array and then making date instance
+    if (taskDate == "") {
+        taskDate = new Date();
+    }
+    else {
     taskDate = new Date(taskDate[0], taskDate[1] - 1, taskDate[2]);
+    }
     let taskPriority = document.querySelector("#taskPriority").value;
     console.log(taskPriority);
     document.querySelector("#taskTitle").value = "";
@@ -121,7 +124,7 @@ function createNewTask(projectTitle) {
     reattachTaskListener();
 }
 
-//Function that reattaches the event listener to create tasks
+//Function that reattaches the event listener to create tasks; needed because whenever the display is recreated, the event listener is lost
 function reattachTaskListener() {
     let taskSubmit = document.querySelector("#taskSubmit");
     taskSubmit.addEventListener("click", function() {
@@ -138,6 +141,10 @@ function recreateDynamicArrays() {
     dynamicProjectHolder.createWeekTasks();
     dynamicProjectHolder.createLateTasks();
 }
+
+
+
+//-----These 2 functions deal with the specifics behind having a propject selected (highlighted)-----
 
 //Function to highlight the project that is currently selected
 function selectProject(e) {
@@ -162,6 +169,11 @@ function unselect() {
     }
 }
 
+
+
+//-----Section deals with the project holder on the sidePanel-----
+
+//Toggles the opacity of the createForm 
 function toggleCreateForm() {
     let visibility = createForm.style.visibility;
     if (visibility == "hidden")
@@ -219,6 +231,7 @@ function createProjectDOM() {
     }
 }
 
+//Function for altering string length; shortens string and adds ""..." on the end if it is longer then the input length
 function spliceString(string, length) {
     if (string.length > length) {nodelist
         string = string.substring(0, length);
@@ -279,9 +292,4 @@ function test() {
     dynamicProjectHolder.createTodayTasks();
     dynamicProjectHolder.createWeekTasks();
     dynamicProjectHolder.createLateTasks();
-    
-    console.log(dynamicProjectHolder.allTasks);
-    console.log(dynamicProjectHolder.todayTasks);
-    console.log(dynamicProjectHolder.weekTasks);
-    console.log(dynamicProjectHolder.lateTasks);
 }
