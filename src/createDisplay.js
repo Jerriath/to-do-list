@@ -16,8 +16,8 @@ export function createDisplay(title, array) {
     taskHolder.classList.add("taskHolder");
     projectHeader.id = "projectHeader";
     taskHolder.id = "taskHolder";
-    displayArea.appendChild(projectHeader);
-    displayArea.appendChild(taskHolder);
+    displayArea.insertBefore(projectHeader, document.querySelector("#addTaskDiv"));
+    displayArea.insertBefore(taskHolder, document.querySelector("#addTaskDiv"));
 
     //-----Create project title elements and append to projectHeader-----
     let titleDiv = document.createElement("div");
@@ -39,10 +39,15 @@ export function createDisplay(title, array) {
     let priorityLegend = document.createElement("p");
     let statusLegend = document.createElement("p");
     titleLegend.textContent = "Title";
+    titleLegend.style.width = "40%";
     dueDateLegend.textContent = "Due Date";
+    dueDateLegend.style.width = "20%";
     projectLegend.textContent = "Project";
+    projectLegend.style.width = "20%";
     priorityLegend.textContent = "Priority";
+    priorityLegend.style.width = "10%";
     statusLegend.textContent = "Status";
+    statusLegend.style.width = "10%";
     taskHeader.appendChild(titleLegend);
     taskHeader.appendChild(dueDateLegend);
     taskHeader.appendChild(projectLegend);
@@ -61,6 +66,11 @@ export function createDisplay(title, array) {
         let project = document.createElement("p");
         let priority = document.createElement("p");
         let status = document.createElement("p");
+        title.style.width = "40%";
+        dueDate.style.width = "20%";
+        project.style.width = "20%";
+        priority.style.width = "10%";
+        status.style.width = "10%";
         title.textContent = currentTask.title;
         dueDate.textContent = format(currentTask.dueDate, "MM/dd/yyyy");
         project.textContent = currentTask.project;
@@ -69,7 +79,7 @@ export function createDisplay(title, array) {
             status.textContent = "Completed";
         }
         else {
-            status.textContent = "Not Completed";
+            status.textContent = "Incomplete";
         }
         if (i%2 == 0) {
             taskDiv.style.backgroundColor = "rgba(220, 220, 220, 0.5)";
@@ -120,7 +130,7 @@ export function createDisplay(title, array) {
     medium.text = "medium";
     priorityInput.appendChild(medium);
     let high = document.createElement("option");
-    high.value = "low";
+    high.value = "high";
     high.text = "high";
     let submitBtn = document.createElement("button");
     submitBtn.classList.add("submitBtn");
@@ -138,12 +148,12 @@ export function createDisplay(title, array) {
     taskForm.style.visibility = "hidden";
     taskForm.style.opacity = 0;
     let addTaskDiv = document.createElement("div");
+    addTaskDiv.id = "addTaskDiv";
     addTaskDiv.classList.add("addTaskDiv");
     addTaskDiv.appendChild(addTask);
     addTaskDiv.appendChild(taskForm);
     taskHolder.appendChild(addTaskDiv);
     addTask.addEventListener("click", toggleTaskForm)
-    submitBtn.addEventListener("click", addTask)
 }
 
 //Function for refreshing the taskHolder for when a new Task is added
@@ -193,7 +203,7 @@ function clearDisplay() {
     let displayArea = document.querySelector("#displayArea");
     while (displayArea.firstChild)
     {
-        displayArea.remove(displayArea.firstChild);
+        displayArea.firstChild.remove();
     }
 }
 

@@ -4,7 +4,7 @@ import CreateProject from "./createProject.js";
 import ProjectHolder from "./projectHolder.js";
 import DynamicProjectHolder from "./dynamicTaskHolder.js";
 import RenderPage from "./renderPage.js";
-import { createDisplay, getTitle } from "./createDisplay.js";
+import { createDisplay, getTitle, getTaskArray } from "./createDisplay.js";
 
 //PubSub functions
 //Add all the PubSub.subscribe stuff here
@@ -13,14 +13,12 @@ import { createDisplay, getTitle } from "./createDisplay.js";
 let projectHolder = ProjectHolder();
 let dynamicProjectHolder = DynamicProjectHolder();
 test();
-dynamicProjectHolder.createAllTasks(projectHolder.groupAllTasks());
 
 //Render initial page elements
 RenderPage();
+recreateDynamicArrays();
 let allTasks = dynamicProjectHolder.allTasks;
 createDisplay("All", allTasks);
-
-
 
 //Cache DOM for sidePanel
 let todayBtn = document.querySelector("#todayBtn");
@@ -36,13 +34,46 @@ let titleInput = document.querySelector("#titleInput");
 let submitBtn = document.querySelector("#submit");
 createForm.style.visibility = "hidden";
 createForm.style.opacity = 0;
+createProjectDOM(); //Adds the projects in the project holder to the sidePanel
+unselect();
+allBtn.classList.add("selected");
 
-//Add event listeners to addProject button
-todayBtn.addEventListener("click", function(e){selectProject(e);});
-weekBtn.addEventListener("click", function(e){selectProject(e);});
-allBtn.addEventListener("click", function(e){selectProject(e);});
-miscBtn.addEventListener("click", function(e){selectProject(e);});
-lateBtn.addEventListener("click", function(e){selectProject(e);});
+//Add event listeners to projectButtons
+todayBtn.addEventListener("click", function(e){
+    selectProject(e);
+    let title = getTitle(e);
+    let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+    createDisplay(title, taskArray);
+    reattachTaskListener();
+});
+weekBtn.addEventListener("click", function(e){
+    selectProject(e);
+    let title = getTitle(e);
+    let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+    createDisplay(title, taskArray);
+    reattachTaskListener();
+});
+allBtn.addEventListener("click", function(e){
+    selectProject(e);
+    let title = getTitle(e);
+    let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+    createDisplay(title, taskArray);
+    reattachTaskListener();
+});
+miscBtn.addEventListener("click", function(e){
+    selectProject(e);
+    let title = getTitle(e);
+    let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+    createDisplay(title, taskArray);
+    reattachTaskListener();
+});
+lateBtn.addEventListener("click", function(e){
+    selectProject(e);
+    let title = getTitle(e);
+    let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+    createDisplay(title, taskArray);
+    reattachTaskListener();
+});
 addProject.addEventListener("click", toggleCreateForm);
 submitBtn.addEventListener("click", initProject);
 titleInput.addEventListener("keypress", function(e) {
@@ -51,28 +82,61 @@ titleInput.addEventListener("keypress", function(e) {
     }
 });
 
+//Cache DOM for displayArea
+let taskSubmit = document.querySelector("#taskSubmit");
+
 //Add event listeners to be able to create Tasks
+taskSubmit.addEventListener("click", function() {
+    let currentTitle = document.querySelector("#titleText").textContent;
+    createNewTask(currentTitle);
+});
 
-
-//Function to create a new task
+//Function to create a new task and adds it to the appropriate project
 function createNewTask(projectTitle) {
     //Cache DOM for displayArea
-    let taskTitle = document.querySelector("#taskTitle");
-    let taskDate = document.querySelector("#taskDate");
-    let taskPriority = document.querySelector("#taskPriority");
+    let taskTitle = document.querySelector("#taskTitle").value;
+    let taskDate = document.querySelector("#taskDate").value.split("-"); //Returns date in yyyy/mm/dd string format; splitting into array and then making date instance
+    taskDate = new Date(taskDate[0], taskDate[1] - 1, taskDate[2]);
+    let taskPriority = document.querySelector("#taskPriority").value;
+    console.log(taskPriority);
+    document.querySelector("#taskTitle").value = "";
+    document.querySelector("#taskDate").value = "";
+    document.querySelector("#taskPriority").value = "";
     let newTask = CreateTask(taskTitle, taskDate, taskPriority);
     //Find the project in our project holders to add the task
     if (projectTitle == "All" || projectTitle == "Today" || projectTitle == "This Week" || projectTitle == "Misc") {
         dynamicProjectHolder.addMiscTask(newTask);
     }
     else {
-        let numOfProj = projectHolder.getArrayLength;
+        let numOfProj = projectHolder.getArrayLength();
         for (let i = 0; i < numOfProj; i++) {
             if (projectTitle == projectHolder.projectArray[i].title) {
                 projectHolder.projectArray[i].addTask(newTask);
             }
         }
     }
+    recreateDynamicArrays();
+    let currentArray = getTaskArray(projectTitle, dynamicProjectHolder, projectHolder);
+    createDisplay(projectTitle, currentArray);
+    reattachTaskListener();
+}
+
+//Function that reattaches the event listener to create tasks
+function reattachTaskListener() {
+    let taskSubmit = document.querySelector("#taskSubmit");
+    taskSubmit.addEventListener("click", function() {
+        let currentTitle = document.querySelector("#titleText").textContent;
+        createNewTask(currentTitle);
+    });
+}
+
+//Function for recreating dynamic arrays; called after any new task is added or any pre-existing task is altered
+function recreateDynamicArrays() {
+    dynamicProjectHolder.createAllTasks(projectHolder.groupAllTasks());
+    dynamicProjectHolder.sortAllByDate();
+    dynamicProjectHolder.createTodayTasks();
+    dynamicProjectHolder.createWeekTasks();
+    dynamicProjectHolder.createLateTasks();
 }
 
 //Function to highlight the project that is currently selected
@@ -115,6 +179,7 @@ function toggleCreateForm() {
     }
 }
 
+//Begins the function call stack that will add a new project to sidePanel and select it
 function initProject() {
     let title = titleInput.value;
     let newProject = CreateProject(title);
@@ -124,7 +189,7 @@ function initProject() {
 }
 
 function createProjectDOM() {
-    while(projectDiv.childNodes.length != 2) {
+    while(projectDiv.childNodes.length != 2) { //Removes all the projects from the sidebar to recreate them all from projectHolder
         projectDiv.childNodes[1].remove();
     }
     let numOfProj = projectHolder.getArrayLength();
@@ -134,14 +199,22 @@ function createProjectDOM() {
         //Create the project button element
         let currentButton = document.createElement("button");
         currentButton.classList.add("projectButton");
-        currentButton.textContent = currentProject.title;
+        currentButton.textContent = spliceString(currentProject.title, 15); //Cuts the project title down to 15 characters and adds "..." at the end
         currentButton.addEventListener("click", function(e){
             selectProject(e);
+            let title = getTitle(e);
+            let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+            createDisplay(title, taskArray);
+            reattachTaskListener();
         });
         projectDiv.insertBefore(currentButton, addProjectDiv);
         if (i == numOfProj - 1) {
             unselect();
             currentButton.classList.add("selected");
+            let title = currentProject.title;
+            let taskArray = getTaskArray(title, dynamicProjectHolder, projectHolder);
+            createDisplay(title, taskArray);
+            reattachTaskListener();
         }
     }
 }

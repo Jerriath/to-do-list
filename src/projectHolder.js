@@ -23,7 +23,6 @@ export default function() {
             let numOfProj = this.projectArray.length;
             for (let i = 0; i < numOfProj; i++) {
                 let numOfTasks = this.projectArray[i].taskArray.length;
-                console.log(numOfTasks);
                 for (let j = 0; j < numOfTasks; j++) {
                     allTasksArray.push(this.projectArray[i].taskArray[j]);
                 }
