@@ -27,11 +27,17 @@ export function createDisplay(title, array) {
     titleText.id = "titleText";
     titleText.classList.add("titleText");
     titleDiv.appendChild(titleText);
-    let removeProjectBtn = document.createElement("button");
-    removeProjectBtn.id = "removeProjectBtn";
-    removeProjectBtn.classList.add("projectButton");
     projectHeader.appendChild(titleDiv);
-    projectHeader.appendChild(removeProjectBtn);
+    if (title == "All" || title == "Today" || title == "This Week" || title == "Misc" || title == "Late") {
+        console.log("dynamicProject");
+    }
+    else {
+        let removeProjectBtn = document.createElement("button");
+        removeProjectBtn.id = "removeProjectBtn";
+        removeProjectBtn.classList.add("removeProjectBtn");
+        removeProjectBtn.textContent = "Remove Project";
+        projectHeader.appendChild(removeProjectBtn);
+    }
 
     //-----Create the project's tasks with a loop and append to taskHolder
     //-Create the task Header/Legend-

@@ -152,6 +152,25 @@ function reattachTaskListener() {
         createNewTask(currentTitle);
     });
     attachCloseTaskListener();
+    if (document.querySelector("#removeProjectBtn"))
+    {
+        let removeProjectBtn = document.querySelector("#removeProjectBtn");
+        removeProjectBtn.addEventListener("click", function(e) {
+            let projectTitle = e.target.parentNode.children[0].outerText;
+            projectHolder.removeProject(projectTitle);
+            let projectHolderDiv = document.querySelector("#projectDiv");
+            projectHolderDiv.childNodes.forEach(element => {
+                if (element.textContent == projectTitle) {
+                    element.remove();
+                }                
+            });
+            recreateDynamicArrays();
+            let currentArray = getTaskArray("All", dynamicProjectHolder, projectHolder); //Reloads the "All" project as default after deleting current project
+            createDisplay("All", currentArray);
+            reattachTaskListener();
+            localStorage.setItem("projectArray", JSON.stringify(projectHolder.projectArray));
+        });
+    }
 }
 
 //Function for attaching event listener to the remove task button

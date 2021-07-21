@@ -10,8 +10,12 @@ export default function() {
             let index = this.projectArray.findIndex(i => i.title == projectTitle);
             return index;
         },
-        removeProject: function(index) {
+        spliceProject: function(index) {
             this.projectArray.splice(index, 1);
+        },
+        removeProject: function(projectTitle) {
+            let index = this.findProjectIndex(projectTitle);
+            this.spliceProject(index);
         },
         sortByName: function() {
             this.projectArray.sort(function(a, b) {
