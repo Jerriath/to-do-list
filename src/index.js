@@ -1,18 +1,37 @@
-import PubSub from "pubsub-js";
 import CreateTask from "./createTask.js";
 import CreateProject from "./createProject.js";
 import ProjectHolder from "./projectHolder.js";
 import DynamicProjectHolder from "./dynamicTaskHolder.js";
 import RenderPage from "./renderPage.js";
 import { createDisplay, getTitle, getTaskArray } from "./createDisplay.js";
+import { parseISO } from "date-fns";
 
-//PubSub functions
-//Add all the PubSub.subscribe stuff here
+//Initialize a localstorage object
+let localStorage = window.localStorage;
+
+
 
 //Initialized projectHolders
 let projectHolder = ProjectHolder();
 let dynamicProjectHolder = DynamicProjectHolder();
-test();
+
+//Checks local storage to see if there exists saved data arrays
+if (localStorage.getItem("miscTasks") && localStorage.getItem("projectArray")) {
+    let projectArrayStorage = JSON.parse(localStorage.getItem("projectArray"));
+    projectArrayStorage.forEach(project => {
+        let newProject = CreateProject(project.title);
+        project.taskArray.forEach(task => {
+            task.dueDate = parseISO(task.dueDate);
+        
+            newProject.addTask(task);
+        });
+        projectHolder.addProject(newProject);
+    });
+    dynamicProjectHolder.miscTasks = JSON.parse(localStorage.getItem("miscTasks"));
+    dynamicProjectHolder.miscTasks.forEach(task => {
+        task.dueDate = parseISO(task.dueDate);
+    });
+}
 
 //Render initial page elements
 RenderPage();
@@ -101,7 +120,6 @@ function createNewTask(projectTitle) {
     taskDate = new Date(taskDate[0], taskDate[1] - 1, taskDate[2]);
     }
     let taskPriority = document.querySelector("#taskPriority").value;
-    console.log(taskPriority);
     document.querySelector("#taskTitle").value = "";
     document.querySelector("#taskDate").value = "";
     document.querySelector("#taskPriority").value = "";
@@ -109,12 +127,14 @@ function createNewTask(projectTitle) {
     //Find the project in our project holders to add the task
     if (projectTitle == "All" || projectTitle == "Today" || projectTitle == "This Week" || projectTitle == "Misc") {
         dynamicProjectHolder.addMiscTask(newTask);
+        localStorage.setItem("miscTasks", JSON.stringify(dynamicProjectHolder.miscTasks));
     }
     else {
         let numOfProj = projectHolder.getArrayLength();
         for (let i = 0; i < numOfProj; i++) {
             if (projectTitle == projectHolder.projectArray[i].title) {
                 projectHolder.projectArray[i].addTask(newTask);
+                localStorage.setItem("projectArray", JSON.stringify(projectHolder.projectArray));
             }
         }
     }
@@ -149,7 +169,8 @@ function attachCloseTaskListener() {
                 let currentProject = document.querySelector("#titleText").textContent;
                 let currentArray = getTaskArray(currentProject, dynamicProjectHolder, projectHolder);
                 createDisplay(currentProject, currentArray);
-                reattachTaskListener;
+                reattachTaskListener();
+                localStorage.setItem("miscTasks", JSON.stringify(dynamicProjectHolder.miscTasks));
             }
             else {
                 let project = projectHolder.projectArray[projectHolder.findProjectIndex(projectTitle)];
@@ -158,7 +179,8 @@ function attachCloseTaskListener() {
                 let currentProject = document.querySelector("#titleText").textContent;
                 let currentArray = getTaskArray(currentProject, dynamicProjectHolder, projectHolder);
                 createDisplay(currentProject, currentArray);
-                reattachTaskListener;
+                reattachTaskListener();
+                localStorage.setItem("projectArray", JSON.stringify(projectHolder.projectArray));
             }
         });
     }
@@ -181,7 +203,6 @@ function recreateDynamicArrays() {
 function selectProject(e) {
     unselect();
     e.target.classList.add("selected");
-    console.log(e);
 }
 
 //Function that unselects all projects; runs before every new selectProject call
@@ -229,6 +250,7 @@ function initProject() {
     projectHolder.addProject(newProject);
     createProjectDOM();
     toggleCreateForm();
+    localStorage.setItem("projectArray", JSON.stringify(projectHolder.projectArray));
 }
 
 function createProjectDOM() {

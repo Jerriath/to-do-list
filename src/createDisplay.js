@@ -27,7 +27,11 @@ export function createDisplay(title, array) {
     titleText.id = "titleText";
     titleText.classList.add("titleText");
     titleDiv.appendChild(titleText);
+    let removeProjectBtn = document.createElement("button");
+    removeProjectBtn.id = "removeProjectBtn";
+    removeProjectBtn.classList.add("projectButton");
     projectHeader.appendChild(titleDiv);
+    projectHeader.appendChild(removeProjectBtn);
 
     //-----Create the project's tasks with a loop and append to taskHolder
     //-Create the task Header/Legend-
@@ -37,25 +41,25 @@ export function createDisplay(title, array) {
     let dueDateLegend = document.createElement("p");
     let projectLegend = document.createElement("p");
     let priorityLegend = document.createElement("p");
-    let statusLegend = document.createElement("p");
+    //let statusLegend = document.createElement("p");  //The status property isn't really used anymore so it's commented out
     let closeLegened = document.createElement("p");
     titleLegend.textContent = "Title";
-    titleLegend.style.width = "35%";
+    titleLegend.style.width = "40%";
     dueDateLegend.textContent = "Due Date";
-    dueDateLegend.style.width = "15%";
+    dueDateLegend.style.width = "20%";
     projectLegend.textContent = "Project";
     projectLegend.style.width = "20%";
     priorityLegend.textContent = "Priority";
     priorityLegend.style.width = "10%";
-    statusLegend.textContent = "Status";
-    statusLegend.style.width = "10%";
+    //statusLegend.textContent = "Status";
+    //statusLegend.style.width = "10%";
     closeLegened.style.width = "10%"
     closeLegened.textContent = "Remove";
     taskHeader.appendChild(titleLegend);
     taskHeader.appendChild(dueDateLegend);
     taskHeader.appendChild(projectLegend);
     taskHeader.appendChild(priorityLegend);
-    taskHeader.appendChild(statusLegend);
+    //taskHeader.appendChild(statusLegend);
     taskHeader.appendChild(closeLegened);
     taskHeader.style.textDecoration = "underline";
     taskHeader.style.fontWeight = "bold";
@@ -69,13 +73,13 @@ export function createDisplay(title, array) {
         let dueDate = document.createElement("p");
         let project = document.createElement("p");
         let priority = document.createElement("p");
-        let status = document.createElement("p");
+        //let status = document.createElement("p");
         let close = document.createElement("button");
-        title.style.width = "35%";
-        dueDate.style.width = "15%";
+        title.style.width = "40%";
+        dueDate.style.width = "20%";
         project.style.width = "20%";
         priority.style.width = "10%";
-        status.style.width = "10%";
+        //status.style.width = "10%";
         close.style.width = "10%";
         close.id = "closeTask" + i;
         title.textContent = spliceString(currentTask.title, 45);
@@ -93,13 +97,13 @@ export function createDisplay(title, array) {
         else {
             taskDiv.classList.add("highPrior");
         }
-
+/*
         if (currentTask.status) {
             status.textContent = "Completed";
         }
         else {
             status.textContent = "Incomplete";
-        }
+        } */
         if (i%2 == 0) {
             taskDiv.style.backgroundColor = "rgba(220, 220, 220, 0.5)";
         }
@@ -107,7 +111,7 @@ export function createDisplay(title, array) {
         taskDiv.appendChild(dueDate);
         taskDiv.appendChild(project);
         taskDiv.appendChild(priority);
-        taskDiv.appendChild(status);
+        //taskDiv.appendChild(status);
         taskDiv.appendChild(close);
         taskHolder.appendChild(taskDiv);
     }
@@ -174,29 +178,6 @@ export function createDisplay(title, array) {
     addTaskDiv.appendChild(taskForm);
     taskHolder.appendChild(addTaskDiv);
     addTask.addEventListener("click", toggleTaskForm)
-}
-
-//Function for refreshing the taskHolder for when a new Task is added
-export function refreshTasks(array) {
-    let numOfTasks = array.length;
-    for (let i = 0; i < numOfTasks; i ++) {
-        let currentTask = array[i];
-        let taskDiv = document.createElement("div");
-        taskDiv.classList.add("task");
-        let title = document.createElement("p");
-        let dueDate = document.createElement("p");
-        let project = document.createElement("p");
-        let priority = document.createElement("p");
-        title.textContent = currentTask.title;
-        dueDate.textContent = format(currentTask.dueDate);
-        project.textContent = currentTask.project;
-        priority.textContent = currentTask.priority;
-        taskDiv.appendChild(title);
-        taskDiv.appendChild(dueDate);
-        taskDiv.appendChild(project);
-        taskDiv.appendChild(priority);
-        taskHolder.appendChild(taskDiv);
-    }
 }
 
 //Function to toggle task create form
