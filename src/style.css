@@ -158,6 +158,25 @@
     color: black;
     background-color:rgba(70, 70, 70, .3);
     border: 1px solid rgba(125, 125, 125, 0.5);
+    border-left: 5px solid rgba(125, 125, 125, 0.5);
+}
+
+.removeTask {
+    background: rgba(125, 125, 125, 0.3);
+    transition: all 0.2s linear;
+    border: 1px solid rgba(125, 125, 125, 0.3);
+}
+
+.lowPrior {
+    border-left: 5px solid green !important;
+}
+
+.medPrior {
+    border-left: 5px solid orange !important;
+}
+
+.highPrior {
+    border-left: 5px solid red !important;
 }
 
 .taskForm {

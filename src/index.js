@@ -131,6 +131,37 @@ function reattachTaskListener() {
         let currentTitle = document.querySelector("#titleText").textContent;
         createNewTask(currentTitle);
     });
+    attachCloseTaskListener();
+}
+
+//Function for attaching event listener to the remove task button
+function attachCloseTaskListener() {
+    let baseId = "#closeTask";
+    let numOfTasks = document.querySelector("#taskHolder").childNodes.length - 2;
+    for (let i = 0; i < numOfTasks; i ++) {
+        let currentId = baseId + i;
+        document.querySelector(currentId).addEventListener("click", function(e) {
+            let taskTitle = e.target.parentNode.children[0].textContent;
+            let projectTitle = e.target.parentNode.children[2].textContent;
+            if (projectTitle == "misc") {
+                dynamicProjectHolder.removeTask(taskTitle);
+                recreateDynamicArrays();
+                let currentProject = document.querySelector("#titleText").textContent;
+                let currentArray = getTaskArray(currentProject, dynamicProjectHolder, projectHolder);
+                createDisplay(currentProject, currentArray);
+                reattachTaskListener;
+            }
+            else {
+                let project = projectHolder.projectArray[projectHolder.findProjectIndex(projectTitle)];
+                project.removeTask(taskTitle);
+                recreateDynamicArrays();
+                let currentProject = document.querySelector("#titleText").textContent;
+                let currentArray = getTaskArray(currentProject, dynamicProjectHolder, projectHolder);
+                createDisplay(currentProject, currentArray);
+                reattachTaskListener;
+            }
+        });
+    }
 }
 
 //Function for recreating dynamic arrays; called after any new task is added or any pre-existing task is altered

@@ -11,7 +11,7 @@ export default (title) => {
             this.taskArray.push(newTask);
         },
         //Used to find index of desired task title (can be found from DOM)
-        findIndex: function(taskTitle) {
+        findTaskIndex: function(taskTitle) {
             let index = this.taskArray.findIndex(i => i.title === taskTitle);
             return index;
         },
@@ -19,7 +19,7 @@ export default (title) => {
             this.taskArray.splice(index, 1);
         },
         removeTask: function(taskTitle) {
-            let index = findIndex(taskTitle);
+            let index = this.findTaskIndex(taskTitle);
             this.spliceTask(index);
         },
         clearSortedArray: function() {

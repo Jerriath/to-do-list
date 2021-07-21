@@ -45,7 +45,17 @@ export default function() {
             task.project = "misc";
             this.miscTasks.push(task);
         },
-    
+        findTaskIndex: function(taskTitle) {
+            let index = this.miscTasks.findIndex(i => i.title === taskTitle);
+            return index;
+        },
+        spliceTask: function(index) {
+            this.miscTasks.splice(index, 1);
+        },
+        removeTask: function(taskTitle) {
+            let index = this.findTaskIndex(taskTitle);
+            this.spliceTask(index);
+        },
     }
     return dynamicProjectHolder;
 }

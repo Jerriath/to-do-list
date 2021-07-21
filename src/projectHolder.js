@@ -6,8 +6,8 @@ export default function() {
             this.projectArray.push(newProject);
         },
         //Copy pasta function found in createProject module
-        findIndex: function(projectTitle) {
-            let index = this.projectArray.findIndex(i => i.title === projectTitle);
+        findProjectIndex: function(projectTitle) {
+            let index = this.projectArray.findIndex(i => i.title == projectTitle);
             return index;
         },
         removeProject: function(index) {
