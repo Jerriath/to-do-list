@@ -16,7 +16,7 @@ let projectHolder = ProjectHolder();
 let dynamicProjectHolder = DynamicProjectHolder();
 
 //Checks local storage to see if there exists saved data arrays
-if (localStorage.getItem("miscTasks") && localStorage.getItem("projectArray")) {
+if (localStorage.getItem("miscTasks") || localStorage.getItem("projectArray")) {
     let projectArrayStorage = JSON.parse(localStorage.getItem("projectArray"));
     projectArrayStorage.forEach(project => {
         let newProject = CreateProject(project.title);
